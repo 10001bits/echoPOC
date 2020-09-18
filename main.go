@@ -1,7 +1,7 @@
 package main
 
 import (
-	"echoPoc/Routes"
+	"echoPoc/Server"
 	"github.com/labstack/echo"
 	"net/http"
 )
@@ -9,7 +9,7 @@ import (
 
 func main() {
 	e := echo.New()
-	Routes.Routes(e)
+	Server.Routes(e)
 	http.Handle("/",e)
 	e.Logger.Fatal(e.Start(":4000"))
 }
