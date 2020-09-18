@@ -4,7 +4,7 @@ import (
 	"echoPoc/Beans"
 	"echoPoc/Service"
 	"echoPoc/types"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"net/http"
 )
