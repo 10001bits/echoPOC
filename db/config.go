@@ -7,7 +7,9 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/x/bsonx"
 	"log"
+	"os"
 	"time"
+	"github.com/joho/godotenv"
 )
 
 var (
@@ -17,8 +19,14 @@ var (
 func Connect() {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
+	err := godotenv.Load()
+
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(
-		"mongodb://Ayush123:Ayush123@go-tinyurl-shard-00-00.hatxv.mongodb.net:27017,go-tinyurl-shard-00-01.hatxv.mongodb.net:27017,go-tinyurl-shard-00-02.hatxv.mongodb.net:27017/tinyUrl?ssl=true&replicaSet=atlas-4dlrbh-shard-0&authSource=admin&retryWrites=true&w=majority",
+		os.Getenv("DB_URI"),
 	))
 	if err != nil {
 		log.Fatal(err)

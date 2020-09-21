@@ -21,6 +21,9 @@ func (controller *UserController)CreateUser(c echo.Context) error {
 	if err := c.Bind(u); err != nil {
 		return c.JSON(http.StatusBadRequest,u)
 	}
+	if err := c.Validate(u); err != nil {
+		return c.JSON(http.StatusBadRequest,err.Error())
+	}
 	result, err := controller.UserService.CreateUserService(u)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest,u)

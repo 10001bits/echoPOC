@@ -2,6 +2,8 @@ package server
 
 import (
 	"echoPoc/controllers"
+	"echoPoc/types"
+	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -13,7 +15,7 @@ func Routes(e *echo.Echo){
 	e.Use(middleware.Recover())
 
 	 var Controllers = controllers.NewController()
-
+	 e.Validator= &types.UserValidator{validator.New()}
 	g:= e.Group("/api/v1/users",UserCtx)
 	g.PUT("/:id",Controllers.UpdateUser )
 	g.POST("",Controllers.CreateUser)
