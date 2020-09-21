@@ -13,10 +13,10 @@ import (
 )
 
 var (
-	collection *mongo.Collection
+	MongoDb *mongo.Database
 )
 
-func Connect() {
+func init() {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	err := godotenv.Load()
@@ -32,16 +32,21 @@ func Connect() {
 		log.Fatal(err)
 	}
 	fmt.Println("Connected to MongoDb")
-	coll:= client.Database("go-tinyUrl").Collection("Users")
-	 collection = coll
-	_, err = collection.Indexes().CreateOne(
+	MongoDb = client.Database("go-tinyUrl")
+	coll:= MongoDb.Collection("Users")
+
+	_, err = coll.Indexes().CreateOne(
 		context.Background(),
 		mongo.IndexModel{
 			Keys   : bsonx.Doc{{"email", bsonx.Int32(1)}},
 			Options: options.Index().SetUnique(true),
 		},
 	)
+
 }
-func GetCollection() *mongo.Collection {
-	return collection
+func GetDb() (*mongo.Database){
+	return MongoDb
+}
+func GetUserCollection()  *mongo.Collection {
+	return MongoDb.Collection("Users")
 }

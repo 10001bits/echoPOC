@@ -1,15 +1,7 @@
 package main
 
-import (
-	"echoPoc/server"
-	"github.com/labstack/echo/v4"
-	"net/http"
-)
-
+import "echoPoc/server"
 
 func main() {
-	e := echo.New()
-	server.Routes(e)
-	http.Handle("/",e)
-	e.Logger.Fatal(e.Start(":4000"))
+	server.Start()
 }

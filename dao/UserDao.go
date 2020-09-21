@@ -13,8 +13,7 @@ type coll struct {
 }
 var Collection *coll
 func  NewDao() *coll{
-	db.Connect()
-	Collection = &coll{UserCollection: db.GetCollection()}
+	Collection = &coll{UserCollection: db.GetUserCollection()}
 	return Collection
 }
 
